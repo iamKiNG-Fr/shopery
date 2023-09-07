@@ -34,8 +34,8 @@ app.get('/', (req, res)=>{
     res.status(200).send("shopery");
 })
  
-app.use('/category', categoryRoute)
-app.use('/product', productRoute)
+app.use('/ap1/v1/category', categoryRoute)
+app.use('/api/v1/product', productRoute)
 
 app.listen(PORT, async ()=>{
     console.log(`connected on port ${PORT}`);

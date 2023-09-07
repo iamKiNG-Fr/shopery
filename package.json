@@ -2,7 +2,7 @@
   "name": "shopery",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
+  "main": "server.js",
   "type": "commonJS",
   "scripts": {
     "start": "node server.js",

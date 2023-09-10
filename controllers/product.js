@@ -5,8 +5,14 @@ const getProducts = async(req, res) => {
     try {
     
         const products = await Products.findAll()
-    
-        res.status(200).json(products)
+        
+        if (products != null) {
+
+            res.status(200).json(products)
+            
+        } else {
+            res.json({message: "no products found"})
+        }
     
     } catch (error) {
     

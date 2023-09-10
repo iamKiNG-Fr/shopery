@@ -1,12 +1,12 @@
-const {Product} = require('../sequelize/models')
+const {Products, Category, ProductType, ProductTag, Tag} = require('../sequelize/models')
 
 // Get all Categories
 const getProducts = async(req, res) => {
     try {
     
-        const categories = await Category.findAll()
+        const products = await Products.findAll()
     
-        res.status(200).json(categories)
+        res.status(200).json(products)
     
     } catch (error) {
     
@@ -22,9 +22,9 @@ const getOneProduct = async(req, res) => {
     
         const uuid = req.params.uuid
 
-        const category = await Category.findOne({where: {uuid}})
+        const product = await Products.findOne({where: {uuid}})
 
-        res.status(200).json(category)
+        res.status(200).json(product)
     
     } catch (error) {
     
@@ -39,26 +39,39 @@ const createProduct = async(req, res) =>{
     
     try{
 
-        const {categoryName,categoryImage} = req.body;
+        const {productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeName,categoryName} = req.body;
  
-        const exist = await Category.findOne({where: {categoryName}})
+        const exist = await Products.findOne({where: {productName}})
+        const category = await Category.findOne({where: {categoryName}})
+        const type = await ProductType.findOne({where: {typeName}})
+        console.log(req.body, exist, category, type);
         
-        if(!exist){
+        if(exist != null){
             
-            await Category.create({categoryName, categoryImage})
-            return res.status(200.).json({message: `new category ${categoryName} created`})
+            return res.json({message: `Product: ${productName}, aleady exist`})    
+        } 
+        if(category == null){
             
-        } else{
+            return res.json({message: `category: ${categoryName}, does not exist, create category`})    
+        } 
+        if(type == null){
+            
+            return res.json({message: `Type: ${typeName}, does not exist`})    
+        } 
+        else{
 
-            return res.json({message: `category: ${categoryName}, aleady exist`})
+            const categoryId = category.id
+            const typeId = type.id
+            
+            await Products.create({productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeId,categoryId})
+            return res.status(200.).json({message: `new product ${productName} added`})
 
         }
             
     
     } catch (error) {
-    
         console.log(error);
-        return res.status(500).json({message: "something went wrong"})
+        return res.status(500).json({message: "ssomething went wrong"})
     
     }
 } 

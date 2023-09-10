@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
 }))
 
 //Database
@@ -29,6 +29,7 @@ const connectDb = async () => {
 //routes
 const categoryRoute = require('./routes/category.js')
 const productRoute = require('./routes/product.js')
+const productTypeRoute = require('./routes/productType.js')
 
 app.get('/', (req, res)=>{
     res.status(200).send("shopery");
@@ -36,6 +37,7 @@ app.get('/', (req, res)=>{
  
 app.use('/api/v1/category', categoryRoute)
 app.use('/api/v1/product', productRoute)
+app.use('/api/v1/productType', productTypeRoute)
 
 app.listen(PORT, async ()=>{
     console.log(`connected on port ${PORT}`);

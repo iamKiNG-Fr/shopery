@@ -3,36 +3,35 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Category extends Model {
+  class ProductTag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      this.hasMany(models.Products, {foreignKey: 'categoryId'});
+      this.belongsTo(models.Products, {foreignKey: 'productId'});
+      this.belongsTo(models.Tag, {foreignKey: 'tagId'});
     }
     toJSON(){
       return {...this.get(), id: undefined}
     }
   }
-  Category.init({
+  ProductTag.init({
     uuid:{
       allowNull: false,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    categoryName: {
-      type: DataTypes.STRING,
-      allowNull: false
+    productId: {
+      type: DataTypes.INTEGER
     },
-    categoryImage: {
-      type: DataTypes.STRING
+    tagId: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
-    modelName: 'Category',
+    modelName: 'ProductTag',
   });
-  return Category;
+  return ProductTag;
 };

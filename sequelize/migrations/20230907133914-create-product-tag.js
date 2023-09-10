@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('ProductTags', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,47 +14,19 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      productPrice: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      productThumbnail: {
-        type: Sequelize.STRING
-      },
-      productPrice: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
-      },
-      productDiscount: {
-        type: Sequelize.DECIMAL
-      },
-      productDescription: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      productWeight: {
-        type: Sequelize.DECIMAL
-      },
-      productColour: {
-        type: Sequelize.STRING
-      },
-      productStock: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      typeId: {
+      productId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'ProductTypes',
+          model: 'Products',
           key: 'id'
         }
       },
-      categoryId: {
+      tagId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Categories',
+          model: 'Tags',
           key: 'id'
         }
       },
@@ -69,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
+    await queryInterface.dropTable('ProductTags');
   }
 };

@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.ProductType, {foreignKey: 'typeId'});
+      this.belongsTo(models.Category, {foreignKey: 'categoryId'});
+      this.hasMany(models.ProductTag, {foreignKey: 'productId'});
     }
     toJSON(){
       return {...this.get(), id: undefined}
@@ -44,7 +47,15 @@ module.exports = (sequelize, DataTypes) => {
     productStock: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    typeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Products',

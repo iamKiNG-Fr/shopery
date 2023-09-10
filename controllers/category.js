@@ -34,6 +34,24 @@ const getOneCategory = async(req, res) => {
     }
 }
 
+// Get All Products in a category
+const getCategoryProducts = async(req, res) => {
+    try {
+    
+        const categories = await Category.findAll()
+    
+        res.status(200).json(categories)
+    
+    } catch (error) {
+    
+        console.log(error);
+        return res.status(500).json({message: "something went wrong"})
+    
+    }
+}
+
+
+
 //  Create Category
 const createCategory = async(req, res) =>{
     
@@ -114,4 +132,4 @@ const deleteCategory = async (req, res) =>{
     }
 } 
 
-module.exports = {getCategories, getOneCategory, createCategory, updateCategory, deleteCategory}
+module.exports = {getCategories, getOneCategory, getCategoryProducts, createCategory, updateCategory, deleteCategory}

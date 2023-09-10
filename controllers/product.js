@@ -44,7 +44,7 @@ const createProduct = async(req, res) =>{
         const exist = await Products.findOne({where: {productName}})
         const category = await Category.findOne({where: {categoryName}})
         const type = await ProductType.findOne({where: {typeName}})
-        console.log(req.body, exist, category, type);
+        // console.log(req.body, exist, categoryName, type);
         
         if(exist != null){
             
@@ -71,7 +71,7 @@ const createProduct = async(req, res) =>{
     
     } catch (error) {
         console.log(error);
-        return res.status(500).json({message: "ssomething went wrong"})
+        return res.status(500).json({message: "something went wrong"})
     
     }
 } 

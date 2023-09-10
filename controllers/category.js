@@ -1,4 +1,5 @@
-const {Category} = require('../sequelize/models')
+const {Category, Products} = require('../sequelize/models');
+const products = require('../sequelize/models/products');
 
 // Get all Categories
 const getCategories = async(req, res) => {
@@ -37,10 +38,23 @@ const getOneCategory = async(req, res) => {
 // Get All Products in a category
 const getCategoryProducts = async(req, res) => {
     try {
+        
+        const categoryName = req.params.category
+
+        const category = await Category.findOne({where: {categoryName}})
+
+        if (category != null) {
+            
+            const categoryProducts = await Products.findAll({where: {categoryId: category.id }})
+            
+            return res.status(200).json(categoryProducts)
+        }
+        else {
+            
+            return res.json({message: "invalid category"})
+
+        }
     
-        const categories = await Category.findAll()
-    
-        res.status(200).json(categories)
     
     } catch (error) {
     

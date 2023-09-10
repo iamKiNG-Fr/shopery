@@ -1,6 +1,6 @@
 const {Products, Category, ProductType, ProductTag, Tag} = require('../sequelize/models')
 
-// Get all Categories
+// Get all Products
 const getProducts = async(req, res) => {
     try {
     
@@ -16,13 +16,13 @@ const getProducts = async(req, res) => {
     }
 }
 
-// Get one Categories
+// Get one Product
 const getOneProduct = async(req, res) => {
     try {
     
-        const uuid = req.params.uuid
+        const productName = req.params.product
 
-        const product = await Products.findOne({where: {uuid}})
+        const product = await Products.findOne({where: {productName}})
 
         res.status(200).json(product)
     

@@ -11,11 +11,11 @@ router.get('', getProducts)
 router.post('', createProduct)
 
 // get one category
-router.get('/:uuid', getOneProduct)
+router.get('/:product', getOneProduct)
 
 // update category
-router.patch('/:uuid', updateProduct)
+router.patch('/:product', updateProduct)
 
-router.delete('/:uuid', deleteProduct)
+router.delete('/:product', deleteProduct)
 
 module.exports = router

@@ -59,11 +59,13 @@ const createProduct = async(req, res) =>{
             return res.json({message: `Type: ${typeName}, does not exist`})    
         } 
         else{
-
+            console.log("<<<<<<here1>>>>>>");
             const categoryId = category.id
             const typeId = type.id
+            console.log("<<<<<<here2>>>>>>");
             
             await Products.create({productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeId,categoryId})
+            console.log("<<<<<<here3>>>>>>");
             return res.status(200.).json({message: `new product ${productName} added`})
 
         }

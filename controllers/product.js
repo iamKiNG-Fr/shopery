@@ -46,21 +46,28 @@ const createProduct = async(req, res) =>{
     try{
 
         const {productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeName,categoryName} = req.body;
- 
+        
+        console.log("<<<<<<here1hmm>>>>>>");
         const exist = await Products.findOne({where: {productName}})
+        console.log("<<<<<<heree>>>>>>");
         const category = await Category.findOne({where: {categoryName}})
+        console.log("<<<<<<herec>>>>>>");
         const type = await ProductType.findOne({where: {typeName}})
+        console.log("<<<<<<heret>>>>>>");
         // console.log(req.body, exist, categoryName, type);
         
         if(exist != null){
             
+            console.log("<<<<<<hereexis>>>>>>");
             return res.json({message: `Product: ${productName}, aleady exist`})    
         } 
         if(category == null){
             
+            console.log("<<<<<<herecate1>>>>>>");
             return res.json({message: `category: ${categoryName}, does not exist, create category`})    
         } 
         if(type == null){
+            console.log("<<<<<<here1type>>>>>>");
             
             return res.json({message: `Type: ${typeName}, does not exist`})    
         } 

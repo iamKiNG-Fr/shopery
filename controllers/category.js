@@ -59,7 +59,7 @@ const getCategoryProducts = async(req, res) => {
     } catch (error) {
     
         console.log(error);
-        return res.status(500).json({message: "something went wrong"})
+        return res.status(500).json({message: "Oops, something went wrong"})
     
     }
 }

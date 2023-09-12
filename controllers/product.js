@@ -189,7 +189,7 @@ const addFeaturedProduct = async(req, res) =>{
         
         const product = await Products.findOne({where: {productName}})
         
-        
+        // console.log(product);
         if(product == null){
             
             return res.json({message: `product does not exist`})
@@ -203,7 +203,7 @@ const addFeaturedProduct = async(req, res) =>{
                 
                 return res.json({message: `${productName} is already featured`})
             } else {
-
+                
                 await FeaturedProducts.create({productId})
                 
                 return res.status(200.).json({message: `new product ${productName} is now featured`})

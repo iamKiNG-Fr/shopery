@@ -6,8 +6,15 @@ const getCategories = async(req, res) => {
     try {
     
         const categories = await Category.findAll()
-    
-        res.status(200).json(categories)
+        
+        if (categories != null) {
+            
+            return res.status(200).json(categories)
+            
+        } else {
+            
+            return res.status(200).json({message: "No categories available"})
+        }
     
     } catch (error) {
     
@@ -25,12 +32,20 @@ const getOneCategory = async(req, res) => {
 
         const category = await Category.findOne({where: {uuid}})
 
-        res.status(200).json(category)
+        if (category != null) {
+            
+            return res.status(200).json(category)
+            
+        } else {
+            
+            return res.status(200).json({message: "category does not exist"})
+        
+        }
     
     } catch (error) {
     
         // console.log(error);
-        return res.status(404).json({message: "category not found"})
+        return res.status(500).json({message: "something went wrong"})
     
     }
 }
@@ -134,14 +149,23 @@ const deleteCategory = async (req, res) =>{
       
         const removeCategory = await Category.findOne({where: {uuid}})
         
-        await removeCategory.destroy()
+        if (removeCategory != null) {
+            
+            await removeCategory.destroy()
+    
+            return res.status(200.).json({message: `${removeCategory.categoryName} category deleted`})
+       
+        } else {
+            
+            return res.status(200).json({message: "category to be deleted does not exist"})
 
-        return res.status(200.).json({message: `${removeCategory.categoryName} category deleted`})
+        }
+
 
     } catch (error) {
     
         console.log(error);
-        return res.status(404).json({message: "category to be updated does not exist"})
+        return res.status(500).json({message: "something went wrong"})
     
     }
 } 

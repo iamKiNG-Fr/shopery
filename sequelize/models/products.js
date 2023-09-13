@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.ProductTag, {foreignKey: 'productId'});
       this.hasOne(models.PopularProducts, {foreignKey: 'productId'});
       this.hasOne(models.FeaturedProducts, {foreignKey: 'productId'});
+      this.hasOne(models.BestSellers, {foreignKey: 'productId'});
+      this.hasOne(models.HotDeals, {foreignKey: 'productId'});
+      this.hasOne(models.TopRated, {foreignKey: 'productId'});
     }
     toJSON(){
       return {...this.get(), id: undefined}

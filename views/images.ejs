@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopery | images</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png">
+</head>
+<body>
+    <h1>Shopery Images</h1>
+    <nav>
+        <a href="/">•Home</a>
+        <a href="/images">•Images</a>
+        <a href="/docs">•Docs</a>
+    </nav>
+    <hr>
+    <br>
+    <h3>Single Image Upload</h3>
+    <form method="POST" action="/image/single" enctype="multipart/form-data">
+        <input type="file" name="image" id="">
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <h3>Multiple Image Upload</h3>
+    <p style="color: red;">Max 10 images at a time</p>
+    <form method="POST" action="/image/multiple" enctype="multipart/form-data">
+        <input type="file" name="images" multiple>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <hr>
+    <h2>Images on server</h2>
+    <% if (message.length > 0) { %>
+        <p style="color: black; background-color: greenyellow; padding: 0.5rem; border-radius: 3px; width:fit-content;"><%= message %></p>
+    <% } %>
+    <div style="display: flex; flex-wrap: wrap;">
+        <% if (images.length>0) { %>
+            <% images.forEach(image => { %>
+                <div style="display: flex; flex-direction: column; margin: 1rem;">
+                    <img src="/images/<%= image %>" alt="" style="width: 200px; height: 200px; object-fit: cover; object-position: center;">
+                    <div style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                        <p>Name : <%= image %></p>
+                        <a href="shopery.onreder.com/images/<%= image %>">Image link</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else {%>
+            <p>No images Uploaded</p>
+        <% } %>
+    </div>
+    <hr>
+    <p>FrontEnd by Fortune</p>
+    <p>BackEnd by King</p>
+</body>
+</html>

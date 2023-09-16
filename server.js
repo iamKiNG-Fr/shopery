@@ -45,12 +45,14 @@ app.get('/', (req, res)=>{
 })
 app.get('/images', async (req, res)=>{
     const dirpath = path.join(__dirname, './public/images')
+    console.log('<<<<here>>>>>', dirpath);
     const images = await fs.readdir(dirpath, (err, files)=>{
         if(err){
             return console.log(err);
         }
         return files
     }) 
+    console.log('<<<<here>>>>>', images);
     res.status(200).render("images", {images, message : req.flash('success')});
 })
 app.get('/docs', (req, res)=>{

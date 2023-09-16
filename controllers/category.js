@@ -1,5 +1,6 @@
 const {Category, Products} = require('../sequelize/models');
 const products = require('../sequelize/models/products');
+const {check, validationResult} = require("express-validator")
 
 // Get all Categories
 const getCategories = async(req, res) => {

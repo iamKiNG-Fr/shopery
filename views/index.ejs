@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopery</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png">
+</head>
+<body>
+    <h1>Shopery </h1>
+    <hr>
+    <br>
+    <h3>Single Image Upload</h3>
+    <form method="POST" action="/image/single" enctype="multipart/form-data">
+        <input type="file" name="image" id="">
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <h3>Multiple Image Upload</h3>
+    <p style="color: red;">Max 10 images at a time</p>
+    <form method="POST" action="/image/multiple" enctype="multipart/form-data">
+        <input type="file" name="images" multiple>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <hr>
+    <p>FrontEnd by Fortune</p>
+    <p>BackEnd by King</p>
+</body>
+</html>

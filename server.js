@@ -42,12 +42,13 @@ const connectDb = async () => {
 //Backend Front page
 app.get('/', (req, res)=>{
     const dirpath = path.join(__dirname, 'hey')
-    console.log(dirpath);
+    console.log(__dirname);
+    console.log(process.cwd());
     res.status(200).render("index");
 })
 app.get('/images', async (req, res)=>{
     // const dirpath = path.join(__dirname, './public/images')
-    const dirpath = '/public/images'
+    const dirpath = './public/images'
     // console.log('<<<<here>>>>>', dirpath);
     const images = await fs.readdir(dirpath, (err, files)=>{
         if(err){

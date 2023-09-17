@@ -41,9 +41,6 @@ const connectDb = async () => {
 
 //Backend Front page
 app.get('/', (req, res)=>{
-    const dirpath = path.join(__dirname, 'hey')
-    console.log(__dirname);
-    console.log(process.cwd());
     res.status(200).render("index");
 })
 app.get('/images', async (req, res)=>{

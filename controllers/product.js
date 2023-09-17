@@ -1,4 +1,5 @@
 const {Products, Category, ProductType, FeaturedProducts, PopularProducts, BestSellers, HotDeals, TopRated, ProductTag, Tag} = require('../sequelize/models')
+const featuredproducts = require('../sequelize/models/featuredproducts')
 const producttag = require('../sequelize/models/producttag')
 
 // Get all Products
@@ -162,11 +163,17 @@ const getFeaturedProducts = async(req, res) => {
     try {
     
         const featuredProducts = await FeaturedProducts.findAll({include: [Products]})
-    
+        
         if (featuredProducts != null) {
 
-            return res.status(200).json(featuredProducts)
-            
+            const productList = []
+
+            for (let product = 0; product < featuredProducts.length; product++) {
+                const element = featuredProducts[product].Product;
+                productList.push(element)
+            }
+
+            return res.status(200).json(productList)
         } else {
             res.json({message: "no products are featured"})
         }
@@ -258,7 +265,14 @@ const getPopularProducts = async(req, res) => {
     
         if (popularProducts != null) {
 
-            return res.status(200).json(popularProducts)
+            const productList = []
+
+            for (let product = 0; product < popularProducts.length; product++) {
+                const element = popularProducts[product].Product;
+                productList.push(element)
+            }
+
+            return res.status(200).json(productList)
             
         } else {
             res.json({message: "no products are popular"})
@@ -352,7 +366,14 @@ const getBestSellers = async(req, res) => {
     
         if (bestSeller != null) {
 
-            return res.status(200).json(bestSeller)
+            const productList = []
+
+            for (let product = 0; product < bestSeller.length; product++) {
+                const element = bestSeller[product].Product;
+                productList.push(element)
+            }
+
+            return res.status(200).json(productList)
             
         } else {
             res.json({message: "no products are BestSeller"})
@@ -445,7 +466,14 @@ const getHotDeals = async(req, res) => {
     
         if (hotDeal != null) {
 
-            return res.status(200).json(hotDeal)
+            const productList = []
+
+            for (let product = 0; product < hotDeal.length; product++) {
+                const element = hotDeal[product].Product;
+                productList.push(element)
+            }
+
+            return res.status(200).json(productList)
             
         } else {
             res.json({message: "no products are hotDeal"})
@@ -534,11 +562,18 @@ const removeHotDeal = async (req, res) =>{
 const getTopRated = async(req, res) => {
     try {
     
-        const hotDeal = await TopRated.findAll({include: [Products]})
+        const topRated = await TopRated.findAll({include: [Products]})
     
-        if (hotDeal != null) {
+        if (topRated != null) {
 
-            return res.status(200).json(hotDeal)
+            const productList = []
+
+            for (let product = 0; product < topRated.length; product++) {
+                const element = topRated[product].Product;
+                productList.push(element)
+            }
+
+            return res.status(200).json(productList)
             
         } else {
             res.json({message: "no products are Top Rated"})

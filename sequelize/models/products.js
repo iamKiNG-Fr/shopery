@@ -20,9 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.HotDeals, {foreignKey: 'productId'});
       this.hasOne(models.TopRated, {foreignKey: 'productId'});
     }
-    toJSON(){
-      return {...this.get(), id: undefined}
-    }
   }
   Products.init({
     productName: {

@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5300
 app.use(express.static('public'))
 app.use(morgan('dev'))
 app.use(cors({
-    origin:"http://localhost:3000"
+    origin:["http://localhost:3000", "https://shopery.vercel.app"]
 }));
 app.use(express.urlencoded({extended: 'false'}))
 app.use(express.json())

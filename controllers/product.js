@@ -234,12 +234,13 @@ const removeFeaturedProduct = async (req, res) =>{
 
         const productName = req.params.product
       
-        const removeProduct = await FeaturedProducts.findOne({where: {productName}})
+        const product = await Products.findOne({where: {productName}})
+        const removeProduct = await FeaturedProducts.findOne({where: {productId: product.id}})
         
         if (removeProduct != null) {
             
             await removeProduct.destroy()
-            return res.status(200).json({message: `the product ${removeProduct.productName} has been removed from featured`})
+            return res.status(200).json({message: `the product ${product.productName} has been removed from featured`})
             
         } else {
             

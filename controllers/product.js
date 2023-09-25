@@ -435,13 +435,14 @@ const removeBestSeller = async (req, res) =>{
     try{
 
         const productName = req.params.product
-      
-        const removeProduct = await BestSellers.findOne({where: {productName}})
+        const product = await Products.findOne({where: {productName}})
+
+        const removeProduct = await BestSellers.findOne({where: {productId : product.id}})
         
         if (removeProduct != null) {
             
             await removeProduct.destroy()
-            return res.status(200).json({message: `the product ${removeProduct.productName} has been removed from BestSeller`})
+            return res.status(200).json({message: `the product ${product.productName} has been removed from BestSeller`})
             
         } else {
             
@@ -636,12 +637,13 @@ const removeTopRated = async (req, res) =>{
 
         const productName = req.params.product
       
-        const removeProduct = await TopRated.findOne({where: {productName}})
+        const product = await Products.findOne({where: {productName}})
+        const removeProduct = await TopRated.findOne({where: {productId: product.id}})
         
         if (removeProduct != null) {
             
             await removeProduct.destroy()
-            return res.status(200).json({message: `the product ${removeProduct.productName} has been removed from Top Rated`})
+            return res.status(200).json({message: `the product ${product.productName} has been removed from Top Rated`})
             
         } else {
             

@@ -65,11 +65,13 @@ const categoryRoute = require('./routes/category.js')
 const productRoute = require('./routes/product.js')
 const productTypeRoute = require('./routes/productType.js')
 const imageRoute = require('./routes/image.js')
+const adRoute = require('./routes/ad.js')
 
 app.use('/image', imageRoute)
 app.use('/api/v1/category', categoryRoute)
 app.use('/api/v1/product', productRoute)
 app.use('/api/v1/productType', productTypeRoute)
+app.use('/api/v1/ads', adRoute)
 app.use((req, res, next)=>{
     res.status(404).send("404 - The URL you visited does not exist, you dey mess up")
 })

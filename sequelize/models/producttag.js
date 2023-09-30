@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Products, {foreignKey: 'productId'});
       this.belongsTo(models.Tag, {foreignKey: 'tagId'});
     }
-    toJSON(){
-      return {...this.get(), id: undefined}
-    }
   }
   ProductTag.init({
     uuid:{

@@ -50,6 +50,32 @@ const getOneProduct = async(req, res) => {
     }
 }
 
+// Get Products by rating
+const getProductsByRating = async(req, res) => {
+    try {
+    
+        const star = req.params.star
+
+        const product = await Products.findAll({where: {productRating: star}})
+
+        if (product != null) {
+            
+            return res.status(200).json(product)
+
+        } else {
+            
+            return res.status(200).json({message: `No product is rated ${star}`})
+        }
+
+    
+    } catch (error) {
+    
+        // console.log(error);
+        return res.status(500).json({message: "something went wrong"})
+    
+    }
+}
+
 //  Create Product
 const createProduct = async(req, res) =>{
     
@@ -659,4 +685,4 @@ const removeTopRated = async (req, res) =>{
     }
 } 
 
-module.exports = {getProducts, getOneProduct, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}
+module.exports = {getProducts, getOneProduct, getProductsByRating, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}

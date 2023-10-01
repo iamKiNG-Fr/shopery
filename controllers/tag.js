@@ -4,7 +4,7 @@ const {Tag, Products, ProductTag} = require('../sequelize/models');
 const getAllTags = async (req, res) => {
 
     const tag = await Tag.findAll()
-    return res.status(200).json({tag})
+    return res.status(200).json(tag)
 }
 
 //add tags

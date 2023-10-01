@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {getProducts, getOneProduct, getProductsByRating, createProduct, updateProduct, deleteProduct,  getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct,  getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller,getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated} = require('../controllers/product.js')
+const {getProducts, getOneProduct, getProductsByRating, getProductsByprice, createProduct, updateProduct, deleteProduct,  getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct,  getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller,getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated} = require('../controllers/product.js')
 
 
 // get all products
@@ -81,5 +81,8 @@ router.delete('/:product', deleteProduct)
 
 // get products by rating
 router.get('/rating/:star', getProductsByRating)
+
+// get products by price
+router.get('/pricing/:price', getProductsByprice)
 
 module.exports = router

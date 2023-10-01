@@ -58,13 +58,42 @@ const getProductsByRating = async(req, res) => {
 
         const product = await Products.findAll({where: {productRating: star}})
 
-        if (product != null) {
+        if (product.length > 0) {
             
             return res.status(200).json(product)
 
         } else {
             
             return res.status(200).json({message: `No product is rated ${star}`})
+        }
+
+    
+    } catch (error) {
+    
+        // console.log(error);
+        return res.status(500).json({message: "something went wrong"})
+    
+    }
+}
+
+// Get Products by rating
+const getProductsByprice = async(req, res) => {
+    try {
+    
+        const price = req.params.price
+
+        const product = await Products.findAll({where: {productPrice: `${price}`}})
+
+        console.log(product.length);
+        if (product.length > 0) {
+            
+            console.log('entered');
+            return res.status(200).json(product)
+
+        } else {
+            
+            return res.status(200).json({message: `No product is priced at $${price}`})
+
         }
 
     
@@ -685,4 +714,4 @@ const removeTopRated = async (req, res) =>{
     }
 } 
 
-module.exports = {getProducts, getOneProduct, getProductsByRating, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}
+module.exports = {getProducts, getOneProduct, getProductsByRating, getProductsByprice, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}

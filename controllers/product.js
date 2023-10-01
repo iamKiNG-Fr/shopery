@@ -55,7 +55,7 @@ const createProduct = async(req, res) =>{
     
     try{
 
-        const {productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeName,categoryName} = req.body;
+        const {productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeName,categoryName, productRating} = req.body;
         
         
         const exist = await Products.findOne({where: {productName}})
@@ -87,7 +87,7 @@ const createProduct = async(req, res) =>{
             const typeId = type.id
             
             
-            await Products.create({productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeId,categoryId})
+            await Products.create({productName,productThumbnail,productPrice,productDiscount,productDescription,productWeight,productColour,productStock,typeId,categoryId, productRating})
             
             return res.status(200.).json({message: `new product ${productName} added`})
 

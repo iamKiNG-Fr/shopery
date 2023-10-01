@@ -58,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    productRating:{
+      type: DataTypes.SMALLINT,
+      defaultValue: 0
+    } 
   }, {
     sequelize,
     modelName: 'Products',

@@ -93,7 +93,16 @@
             <p>No images Uploaded</p>
         <% } %>
     </div>
-    <hr>
+    <br>
+    <br>
+    <h3>Gallery Image Upload</h3>
+    <p style="color: red;">Max 4 images at a time</p>
+    <form method="POST" action="/image/gallery" enctype="multipart/form-data">
+        <input type="text" name="name" multiple>
+        <input type="file" name="gallery" multiple>
+        <button type="submit">Submit</button>
+    </form>
+
     <p>FrontEnd by Fortune</p>
     <p>BackEnd by King</p>
     <script>

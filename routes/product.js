@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {getProducts, getOneProduct, getProductsByRating, getProductsByprice, createProduct, updateProduct, deleteProduct,  getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct,  getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller,getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated} = require('../controllers/product.js')
+const {getProducts, getOneProduct, getProductsByRating, getProductsByprice, getProductGallery, createProduct, updateProduct, deleteProduct,  getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct,  getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller,getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated} = require('../controllers/product.js')
 
 
 // get all products
@@ -78,6 +78,9 @@ router.put('/:product', updateProduct)
 
 // delete PRODUCT
 router.delete('/:product', deleteProduct)
+
+// get product gallery
+router.get('/gallery/:product', getProductGallery)
 
 // get products by rating
 router.get('/rating/:star', getProductsByRating)

@@ -1,4 +1,4 @@
-const {Products, Category, ProductType, FeaturedProducts, PopularProducts, BestSellers, HotDeals, TopRated, ProductTag, Tag} = require('../sequelize/models')
+const {Products, Category, ProductType, FeaturedProducts, PopularProducts, BestSellers, HotDeals, TopRated, ProductGallery, ProductTag, Tag} = require('../sequelize/models')
 const featuredproducts = require('../sequelize/models/featuredproducts')
 const producttag = require('../sequelize/models/producttag')
 
@@ -76,7 +76,7 @@ const getProductsByRating = async(req, res) => {
     }
 }
 
-// Get Products by rating
+// Get Products by price
 const getProductsByprice = async(req, res) => {
     try {
     
@@ -87,12 +87,46 @@ const getProductsByprice = async(req, res) => {
         console.log(product.length);
         if (product.length > 0) {
             
-            console.log('entered');
+            // console.log('entered');
             return res.status(200).json(product)
 
         } else {
             
             return res.status(200).json({message: `No product is priced at $${price}`})
+
+        }
+
+    
+    } catch (error) {
+    
+        // console.log(error);
+        return res.status(500).json({message: "something went wrong"})
+    
+    }
+}
+
+
+// Get Product Gallery/images
+const getProductGallery = async(req, res) => {
+    try {
+    
+        const productName = req.params.product
+
+        const product = await Products.findOne({where: {productName}})
+
+        const productImages = await ProductGallery.findAll({where: {productId: product.id}})
+
+        if (productImages.length > 0) {
+            
+            const images = productImages.map((image)=> image.link)
+            console.log(images);
+
+            return res.status(200).json({images})
+
+        } else {
+            
+            console.error(error);
+            return res.status(200).json({message: `No images are available for this Product`})
 
         }
 
@@ -714,4 +748,4 @@ const removeTopRated = async (req, res) =>{
     }
 } 
 
-module.exports = {getProducts, getOneProduct, getProductsByRating, getProductsByprice, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}
+module.exports = {getProducts, getOneProduct, getProductsByRating, getProductsByprice, getProductGallery, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}

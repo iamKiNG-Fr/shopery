@@ -102,7 +102,24 @@
         <input type="file" name="gallery" multiple>
         <button type="submit">Submit</button>
     </form>
-
+    <div style="display: flex; flex-wrap: wrap;">
+     <% if (gallery.length>0) { %>
+            <% gallery.forEach(jpg => { %>
+                <div style="display: flex; flex-direction: column; margin: 1rem;">
+                    <img src="/productGallery/<%= jpg %>" alt="" style="width: 200px; height: 200px; object-fit: cover; object-position: center;">
+                    <div style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                        <p>Name : <%= jpg %></p>
+                        <input type="text" value="shopery.onrender.com/images/<%= jpg %>" id="myInput" style="display: none;">
+                        <div class="tooltip">
+                            <button onclick="myFunction()" onmouseout="outFunc()">
+                              <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+                              Copy Link
+                              </button>
+                            </div>
+                    </div>
+                </div>
+            <% })} %>
+    </div>
     <p>FrontEnd by Fortune</p>
     <p>BackEnd by King</p>
     <script>

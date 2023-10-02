@@ -62,6 +62,7 @@ app.get('/', (req, res)=>{
 app.get('/images', async (req, res)=>{
     // const dirpath = path.join(__dirname, './public/images')
     const dirpath = './public/images'
+    const dirpat2 = './public/productGallery'
     // console.log('<<<<here>>>>>', dirpath);
     const images = await fs.readdir(dirpath, (err, files)=>{
         if(err){
@@ -69,8 +70,14 @@ app.get('/images', async (req, res)=>{
         }
         return files
     }) 
+    const gallery = await fs.readdir(dirpat2, (err, files)=>{
+        if(err){
+            return console.log(err);
+        }
+        return files
+    }) 
     // console.log('<<<<here>>>>>', images);
-    res.status(200).render("images", {images, message : req.flash('success')});
+    res.status(200).render("images", {images, gallery, message : req.flash('success')});
 })
 app.get('/docs', (req, res)=>{
     res.status(200).render("api");

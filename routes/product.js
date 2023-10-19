@@ -83,9 +83,9 @@ router.delete('/:product', deleteProduct)
 router.get('/gallery/:product', getProductGallery)
 
 // get products by rating
-router.get('/rating/:star', getProductsByRating)
+router.get('/rating', getProductsByRating)
 
 // get products by price
-router.get('/pricing/:price', getProductsByprice)
+router.get('/pricing', getProductsByprice)
 
 module.exports = router

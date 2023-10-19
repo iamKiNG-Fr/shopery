@@ -1,6 +1,7 @@
 const {Products, Category, ProductType, FeaturedProducts, PopularProducts, BestSellers, HotDeals, TopRated, ProductGallery, ProductTag, Tag} = require('../sequelize/models')
 const featuredproducts = require('../sequelize/models/featuredproducts')
 const producttag = require('../sequelize/models/producttag')
+const {op, Op} = require('sequelize')
 
 // Get all Products
 const getProducts = async(req, res) => {
@@ -54,9 +55,9 @@ const getOneProduct = async(req, res) => {
 const getProductsByRating = async(req, res) => {
     try {
     
-        const star = req.params.star
+        const {minRating, maxRating} = req.params.star
 
-        const product = await Products.findAll({where: {productRating: star}})
+        const product = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
 
         if (product.length > 0) {
             
@@ -80,9 +81,10 @@ const getProductsByRating = async(req, res) => {
 const getProductsByprice = async(req, res) => {
     try {
     
-        const price = req.params.price
+        // const price = req.params.price
+        const {minPrice, maxPrice} = req.query
 
-        const product = await Products.findAll({where: {productPrice: `${price}`}})
+        const product = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
 
         console.log(product.length);
         if (product.length > 0) {

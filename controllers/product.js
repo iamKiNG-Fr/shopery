@@ -19,7 +19,7 @@ const getProducts = async(req, res) => {
 
             } else {
                 
-                return res.json({message: `no products found with rating between ${minPrice} and ${maxPrice}`})
+                return res.json({message: `no products found with price between ${minPrice} and ${maxPrice} naira`})
             
             }
         }
@@ -36,7 +36,7 @@ const getProducts = async(req, res) => {
             
             } else {
                 
-                return res.json({message: `no products found with rating between ${minRating} and ${maxRating}`})
+                return res.json({message: `no products found with rating between ${minRating} and ${maxRating} stars`})
             
             }
             

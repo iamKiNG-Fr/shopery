@@ -6,7 +6,16 @@ const {op, Op} = require('sequelize')
 // Get all Products
 const getProducts = async(req, res) => {
     try {
-    
+        
+        const {minPrice, maxPrice} = req.query
+
+        if (minPrice && maxPrice){
+        
+            const filteredProducts = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
+            return res.status(200).json(filteredProducts)
+
+        }
+        
         const products = await Products.findAll()
         
         if (products != null) {

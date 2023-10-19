@@ -13,7 +13,7 @@ const getProducts = async(req, res) => {
         
             const filteredProducts = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
             
-            if (filteredProducts != null){
+            if (filteredProducts.length > 0){
                 
                 return res.status(200).json(filteredProducts)
 
@@ -30,7 +30,7 @@ const getProducts = async(req, res) => {
             
             const filteredProducts = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
             
-            if (filteredProducts != null){
+            if (filteredProducts.length > 0){
                 
                 return res.status(200).json(filteredProducts)
             

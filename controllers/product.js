@@ -12,16 +12,33 @@ const getProducts = async(req, res) => {
         if (minPrice && maxPrice){
         
             const filteredProducts = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
-            return res.status(200).json(filteredProducts)
+            
+            if (filteredProducts != null){
+                
+                return res.status(200).json(filteredProducts)
 
+            } else {
+                
+                return res.json({message: `no products found with rating between ${minPrice} and ${maxPrice}`})
+            
+            }
         }
         
         const {minRating, maxRating} = req.query
         
-        if (minRating, maxRating){
+        if (minRating && maxRating){
             
             const filteredProducts = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
-            return res.status(200).json(filteredProducts)
+            
+            if (filteredProducts != null){
+                
+                return res.status(200).json(filteredProducts)
+            
+            } else {
+                
+                return res.json({message: `no products found with rating between ${minRating} and ${maxRating}`})
+            
+            }
             
         }
         

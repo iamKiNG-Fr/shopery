@@ -86,6 +86,6 @@ router.get('/gallery/:product', getProductGallery)
 router.get('/rating', getProductsByRating)
 
 // get products by price
-router.get('/pricing', getProductsByprice)
+//router.get('/pricing', getProductsByprice)
 
 module.exports = router

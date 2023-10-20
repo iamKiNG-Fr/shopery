@@ -94,7 +94,7 @@ const getProductsByprice = async(req, res) => {
 
         } else {
             
-            return res.status(200).json({message: `No product is priced at $${price}`})
+            return res.status(200).json({message: `No product is priced at ${minPrice} to ${maxPrice}`})
 
         }
 

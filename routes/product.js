@@ -83,7 +83,7 @@ router.delete('/:product', deleteProduct)
 router.get('/gallery/:product', getProductGallery)
 
 // get products by rating
-router.get('/rating', getProductsByRating)
+// router.get('/rating', getProductsByRating)
 
 // get products by price
 //router.get('/pricing', getProductsByprice)

@@ -24,23 +24,23 @@ const getProducts = async(req, res) => {
             }
         }
         
-        const {minRating, maxRating} = req.query
+        // const {minRating, maxRating} = req.query
         
-        if (minRating && maxRating){
+        // if (minRating && maxRating){
             
-            const filteredProducts = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
+        //     const filteredProducts = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
             
-            if (filteredProducts.length > 0){
+        //     if (filteredProducts.length > 0){
                 
-                return res.status(200).json(filteredProducts)
+        //         return res.status(200).json(filteredProducts)
             
-            } else {
+        //     } else {
                 
-                return res.json({message: `no products found with rating between ${minRating} and ${maxRating} stars`})
+        //         return res.json({message: `no products found with rating between ${minRating} and ${maxRating} stars`})
             
-            }
+        //     }
             
-        }
+        // }
         
         const products = await Products.findAll()
         
@@ -90,9 +90,9 @@ const getOneProduct = async(req, res) => {
 const getProductsByRating = async(req, res) => {
     try {
     
-        const {minRating, maxRating} = req.params.star
+        const rate = req.params.rating
 
-        const product = await Products.findAll({where: {productRating: {[Op.between]: [minRating, maxRating]}}})
+        const product = await Products.findAll({where: {productRating: rate}})
 
         if (product.length > 0) {
             
@@ -100,7 +100,7 @@ const getProductsByRating = async(req, res) => {
 
         } else {
             
-            return res.status(200).json({message: `No product is rated ${star}`})
+            return res.status(200).json({message: `No product is rated ${rate} star(s)`})
         }
 
     
@@ -113,34 +113,34 @@ const getProductsByRating = async(req, res) => {
 }
 
 // Get Products by price
-const getProductsByprice = async(req, res) => {
-    try {
+// const getProductsByprice = async(req, res) => {
+//     try {
     
-        // const price = req.params.price
-        const {minPrice, maxPrice} = req.query
+//         // const price = req.params.price
+//         const {minPrice, maxPrice} = req.query
 
-        const product = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
+//         const product = await Products.findAll({where: {productPrice: {[Op.between]: [minPrice, maxPrice]}}})
 
-        console.log(product.length);
-        if (product.length > 0) {
+//         console.log(product.length);
+//         if (product.length > 0) {
             
-            // console.log('entered');
-            return res.status(200).json(product)
+//             // console.log('entered');
+//             return res.status(200).json(product)
 
-        } else {
+//         } else {
             
-            return res.status(200).json({message: `No product is priced at ${minPrice} to ${maxPrice}`})
+//             return res.status(200).json({message: `No product is priced at ${minPrice} to ${maxPrice}`})
 
-        }
+//         }
 
     
-    } catch (error) {
+//     } catch (error) {
     
-        // console.log(error);
-        return res.status(500).json({message: "something went wrong"})
+//         // console.log(error);
+//         return res.status(500).json({message: "something went wrong"})
     
-    }
-}
+//     }
+// }
 
 
 // Get Product Gallery/images
@@ -785,4 +785,4 @@ const removeTopRated = async (req, res) =>{
     }
 } 
 
-module.exports = {getProducts, getOneProduct, getProductsByRating, getProductsByprice, getProductGallery, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}
+module.exports = {getProducts, getOneProduct, getProductsByRating, getProductGallery, createProduct, updateProduct, deleteProduct, getFeaturedProducts, addFeaturedProduct, removeFeaturedProduct, getPopularProducts,addPopularProduct, removePopularProduct, getBestSellers,addBestSeller,removeBestSeller, getHotDeals, addHotDeal, removeHotDeal, getTopRated, addTopRated, removeTopRated}

@@ -119,15 +119,23 @@ const removeFromCart = async (req, res) => {
         const productId = req.params.id 
         const product = await Products.findOne({where: {id : productId}})
         const cart = req.session.cart
+        console.log(cart);
 
-        for (let item = 0; item < cart.length; item++) {
-            if (cart[item].productId == productId) {
-                if (cart[item].qty <= 1){
-                    cart.splice(item,1)
-                    return res.status(200).json({message: "product removed from cart"})
-                } 
-                cart[item].qty--
-                return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})
+        if (cart.length === 0){
+            return res.status(200).json({message:`Cart is empty`}) 
+        }
+        else{
+            for (let item = 0; item < cart.length; item++) {
+                if (cart[item].productId == productId) {
+                    if (cart[item].qty <= 1){
+                        cart.splice(item,1)
+                        return res.status(200).json({message: "product removed from cart"})
+                    } 
+                    cart[item].qty--
+                    return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})
+                } else {
+                    return res.status(200).json({message:`${product.productName} not in cart`})        
+                }
             }
         }
     

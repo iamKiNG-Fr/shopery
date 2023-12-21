@@ -76,7 +76,7 @@ const addToCart = async (req,res) => {
                 })
             } else {
                 const cart = req.session.cart
-                console.log(cart);
+                // console.log(cart);
                 var isNewItem = true
             
                 for (let item = 0; item < cart.length; item++) {
@@ -100,7 +100,7 @@ const addToCart = async (req,res) => {
             
             }
 
-            return res.status(200).json({message: `${product.productName} added to cart`})
+            return res.status(200).json({message: `+1 ${product.productName} added to cart`})
             
         } else {
             
@@ -113,6 +113,31 @@ const addToCart = async (req,res) => {
     }
 }
 
+const removeFromCart = async (req, res) => {
 
-module.exports = {getCart, addToCart}
+    try {
+        const productId = req.params.id 
+        const product = await Products.findOne({where: {id : productId}})
+        const cart = req.session.cart
+
+        for (let item = 0; item < cart.length; item++) {
+            if (cart[item].productId == productId) {
+                if (cart[item].qty <= 1){
+                    cart.splice(item,1)
+                    return res.status(200).json({message: "product removed from cart"})
+                } 
+                cart[item].qty--
+                return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})
+            }
+        }
+    
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "something went wrong", error})
+    }
+}
+
+
+module.exports = {getCart, addToCart, removeFromCart}
 

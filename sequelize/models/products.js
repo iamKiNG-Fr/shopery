@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Category, {foreignKey: 'categoryId'});
       this.hasMany(models.ProductTag, {foreignKey: 'productId'});
       this.hasMany(models.ProductGallery, {foreignKey: 'productId'});
+      this.hasMany(models.Wishlist, {foreignKey: 'productId'});
       this.hasOne(models.PopularProducts, {foreignKey: 'productId'});
       this.hasOne(models.FeaturedProducts, {foreignKey: 'productId'});
       this.hasOne(models.BestSellers, {foreignKey: 'productId'});

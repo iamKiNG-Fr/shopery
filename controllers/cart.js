@@ -129,7 +129,7 @@ const removeFromCart = async (req, res) => {
                 if (cart[item].productId == productId) {
                     if (cart[item].qty <= 1){
                         cart.splice(item,1)
-                        return res.status(200).json({message: "product removed from cart"})
+                        return res.status(200).json({message: `${product.productName} removed from cart`})
                     } 
                     cart[item].qty--
                     return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})

@@ -132,6 +132,7 @@ const removeFromCart = async (req, res) => {
                         return res.status(200).json({message: `${product.productName} removed from cart`})
                     } 
                     cart[item].qty--
+                    cart[item].subtotal-=cart[item].price;
                     return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})
                 } else {
                     return res.status(200).json({message:`${product.productName} not in cart`})        

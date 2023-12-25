@@ -141,7 +141,7 @@ const updateCategory = async (req, res) =>{
     }
 } 
 
-// Update Category
+// Delete Category
 const deleteCategory = async (req, res) =>{
     
     try{

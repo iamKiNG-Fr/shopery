@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const morgan = require('morgan')
+const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors')
 const app = express()
@@ -37,7 +38,11 @@ app.use(session({
         maxAge: 180 * 60 * 1000
     }
 }))
+app.use(passport.initialize()) // init passport on every route call.
+app.use(passport.session()) // allow passport to use "express-session".
+app.use(passport.authenticate('session')) //configuring Passport.js to use the session-based authentication strategy for user authentication.
 app.use(flash())
+
 
 //make sessions available in views
 app.get('*', (req,res,next)=>{
@@ -83,6 +88,8 @@ app.get('/docs', (req, res)=>{
     res.status(200).render("api");
 })
 
+
+
 //routes
 const categoryRoute = require('./routes/category.js')
 const productRoute = require('./routes/product.js')
@@ -92,6 +99,8 @@ const adRoute = require('./routes/ad.js')
 const cartRoute = require('./routes/cart.js')
 const tagRoute = require('./routes/tag.js')
 const wishlistRoute = require('./routes/wishlist.js')
+const userRoute = require('./routes/user.js')
+const authRoute = require('./routes/authRoutes.js')
 
 app.use('/image', imageRoute)
 app.use('/api/v1/category', categoryRoute)
@@ -101,6 +110,8 @@ app.use('/api/v1/ads', adRoute)
 app.use('/api/v1/cart', cartRoute)
 app.use('/api/v1/tag', tagRoute)
 app.use('/api/v1/wishlist', wishlistRoute)
+app.use('/api/v1/user', userRoute)
+app.use('/api/v1/auth', authRoute)
 app.use((req, res, next)=>{
     res.status(404).send("404 - The URL you visited does not exist on shopery")
 })

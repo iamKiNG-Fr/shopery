@@ -43,19 +43,19 @@ const addUser = async (req, res) => {
         // form validation 
         if (user.length > 0) {
             console.log("user email exist");
-            errors.push({message : "user with email exist"})
+            errors.push("user with email exist")
         }
         if(password.length < 5 ){
-            errors.push({message : "password must be 5 characters or more"})
+            errors.push("password must be 5 characters or more")
         }
 
         if(password != cpassword ){
-            errors.push({message : "passwords do not match"})
+            errors.push("passwords do not match")
         }
 
         if(errors.length > 0 ){
             console.log(errors);
-            return res.status(400).send({errors})
+            return res.status(400).json({errors})
         }
        
         // Form validaiton passed
@@ -65,7 +65,7 @@ const addUser = async (req, res) => {
            
             Users.create({firstname, lastname,email, profile_img, password: hashedPassword})
 
-            return res.status(200).send('successfully registered')
+            return res.status(200).json({message:'successfully registered'})
                    
         
         }

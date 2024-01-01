@@ -32,8 +32,8 @@ const login = (req, res)=> {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     // Then you can send your json as response.
-    res.json({message:"Success", username: req.user.firstname});
-  };
+    res.json({message:"Success", user: req.user.firstname});
+};
 
 const logout = (req, res, next)=>{
     req.logout(err => {

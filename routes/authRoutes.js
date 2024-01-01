@@ -9,7 +9,27 @@ initializePassport(passport)
 
 //routes
 
-router.post('/login', ensureNotAuthenticated, passport.authenticate('local'), login)
+router.post('/login', ensureNotAuthenticated, (req, res, next) => {
+     passport.authenticate('local', (err, user, info)=>{
+    if (err){
+        console.error(err);
+        return res.status(500).json({message: "server error"})
+    }
+    if (!user){
+        return res.status(401).json({message: "unauthorized"})
+    }
+
+    // Using req.login
+    req.login(user, (loginErr) => {
+        if (loginErr) {
+        return res.status(500).json({ error: 'Internal Server Error during login' });
+        }
+
+        // Now req.user should be set to the authenticated user
+        return next()
+    });
+    })(req, res, next) 
+}, login)
 
 router.post('/logout', logout)
 

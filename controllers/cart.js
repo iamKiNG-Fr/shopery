@@ -40,7 +40,13 @@ const getCart = async (req, res) => {
     if (!cart) {
         return res.status(200).send("No products in cart")
     }
-    return res.status(200).json({cart})
+    let total = cart.reduce(
+        (acc, currentItem)=>{
+            return acc + currentItem.subtotal
+        },
+        0
+    )
+    return res.status(200).json({cart, total})
 }
 
 //get all the ads
@@ -48,6 +54,7 @@ const addToCart = async (req,res) => {
     try {
 
         const productId = req.params.id
+        const {quantity} = req.body
         
         // this adds new cart and checks if carts already exists in session, if it exist the existing cart is passed to th function, if it doesnt exist an empty object is passed.
         // var cart = new Cart(req.session.cart ? req.session.cart : {})
@@ -69,10 +76,10 @@ const addToCart = async (req,res) => {
                 req.session.cart.push({
                     productId: productId,
                     name: product.productName,
-                    qty: 1,
+                    qty: quantity,
                     price: Number(product.productPrice),
                     Image: product.productThumbnail,
-                    subtotal: Number(product.productPrice)
+                    subtotal: Number(product.productPrice)*quantity
                 })
             } else {
                 const cart = req.session.cart
@@ -91,16 +98,16 @@ const addToCart = async (req,res) => {
                     cart.push({
                         productId: productId,
                         name: product.productName,
-                        qty: 1,
+                        qty: quantity,
                         price: Number(product.productPrice),
                         image: `${product.productThumbnail}`,
-                        subtotal: Number(product.productPrice)
+                        subtotal: Number(product.productPrice)*quantity
                     })
                 }
             
             }
 
-            return res.status(200).json({message: `+1 ${product.productName} added to cart`})
+            return res.status(200).json({message: `${quantity} ${product.productName} added to cart`})
             
         } else {
             

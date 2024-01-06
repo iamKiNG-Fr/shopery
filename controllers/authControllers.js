@@ -32,6 +32,7 @@ const login = (req, res)=> {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     // Then you can send your json as response.
+    console.log(req.session,req.user);
     res.json({message:"Success", user: req.user.firstname});
 };
 

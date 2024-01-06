@@ -25,7 +25,8 @@ var myStore = new SequelizeStore({
 app.use(express.static('public'))
 app.use(morgan('dev'))
 app.use(cors({
-    origin:["http://localhost:3000", "https://shopery.vercel.app", "https://shopery-fortune-u.vercel.app"]
+    origin:["http://localhost:3000", "https://shopery.vercel.app", "https://shopery-fortune-u.vercel.app"],
+    credentials: true
 }));
 app.use(express.urlencoded({extended: 'false'}))
 app.use(express.json())
@@ -101,6 +102,8 @@ const tagRoute = require('./routes/tag.js')
 const wishlistRoute = require('./routes/wishlist.js')
 const userRoute = require('./routes/user.js')
 const authRoute = require('./routes/authRoutes.js')
+const ordersRoute = require('./routes/orders.js')
+const checkOutRoute = require('./routes/checkout.js')
 
 app.use('/image', imageRoute)
 app.use('/api/v1/category', categoryRoute)
@@ -112,6 +115,8 @@ app.use('/api/v1/tag', tagRoute)
 app.use('/api/v1/wishlist', wishlistRoute)
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/auth', authRoute)
+app.use('/api/v1/orders', ordersRoute)
+app.use('/api/v1/checkout', checkOutRoute)
 app.use((req, res, next)=>{
     res.status(404).send("404 - The URL you visited does not exist on shopery")
 })

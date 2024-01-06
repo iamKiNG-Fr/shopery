@@ -126,6 +126,7 @@ const removeFromCart = async (req, res) => {
         const productId = req.params.id 
         const product = await Products.findOne({where: {id : productId}})
         const cart = req.session.cart
+        const {quantity} = req.body
         console.log(cart);
 
         if (cart.length === 0){
@@ -138,9 +139,9 @@ const removeFromCart = async (req, res) => {
                         cart.splice(item,1)
                         return res.status(200).json({message: `${product.productName} removed from cart`})
                     } 
-                    cart[item].qty--
-                    cart[item].subtotal-=cart[item].price;
-                    return res.status(200).json({message:`${product.productName} Quantity reduced by 1`})
+                    cart[item].qty-=quantity
+                    cart[item].subtotal-=cart[item].price*quantity;
+                    return res.status(200).json({message:`${product.productName} Quantity reduced by ${quantity}`})
                 } else {
                     return res.status(200).json({message:`${product.productName} not in cart`})        
                 }

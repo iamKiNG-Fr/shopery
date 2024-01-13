@@ -107,7 +107,7 @@ const addToCart = async (req,res) => {
             
             }
 
-            return res.status(200).json({message: `${quantity} ${product.productName} added to cart`})
+            return res.status(200).json({message: `${quantity} ${product.productName} added to cart`, user: req.isAuthenticated})
             
         } else {
             

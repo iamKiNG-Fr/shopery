@@ -37,6 +37,7 @@ app.use(session({
     saveUninitialized: true,
     store: myStore,
     cookie: {
+        path: '/',
         sameSite: 'None',
         maxAge: 180 * 60 * 1000,
         secure: true

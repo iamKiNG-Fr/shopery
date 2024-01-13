@@ -40,7 +40,9 @@ app.use(session({
         path: '/',
         sameSite: 'None',
         maxAge: 180 * 60 * 1000,
-        secure: true
+        secure: true,
+        httpOnly: true
+
     }
 }))
 app.use(passport.initialize()) // init passport on every route call.

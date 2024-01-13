@@ -22,6 +22,7 @@ var myStore = new SequelizeStore({
 });
 
 //middleware
+app.set("trust proxy", 1)
 app.use(express.static('public'))
 app.use(morgan('dev'))
 app.use(cors({

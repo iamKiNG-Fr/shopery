@@ -38,7 +38,7 @@ const getCart = async (req, res) => {
 
     const cart = req.session.cart
     if (!cart) {
-        return res.status(200).send("No products in cart")
+        return res.status(200).json({message:"No products in cart"})
     }
     let total = cart.reduce(
         (acc, currentItem)=>{

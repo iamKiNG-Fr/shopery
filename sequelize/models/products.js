@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.BestSellers, {foreignKey: 'productId'});
       this.hasOne(models.HotDeals, {foreignKey: 'productId'});
       this.hasOne(models.TopRated, {foreignKey: 'productId'});
+      this.hasMany(models.ShoperyOrderDetails, {foreignKey: 'productId'});
     }
   }
   Products.init({

@@ -1,12 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-const {getOrders} = require('../controllers/orders.js')
+const {getOrders, addOrder, getOneOrder} = require('../controllers/orders.js')
 
-//get all the ads
+//get all Orders
 router.get('', getOrders)
 
-//get only one ad
-// router.get('/:id', getOneAd)
+//add an Oreder
+router.get('', addOrder)
+
+//get only one Order
+router.get('/:id', getOneOrder)
 
 module.exports = router

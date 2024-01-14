@@ -55,7 +55,7 @@ const addToCart = async (req,res) => {
 
         const productId = req.params.id
         const {quantity} = req.body
-        console.log(req.session);
+        // console.log(req.session);
         // this adds new cart and checks if carts already exists in session, if it exist the existing cart is passed to th function, if it doesnt exist an empty object is passed.
         // var cart = new Cart(req.session.cart ? req.session.cart : {})
        

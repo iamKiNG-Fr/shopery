@@ -1,15 +1,30 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const {getOrders, addOrder, getOneOrder} = require('../controllers/orders.js')
+const {
+  getOrders,
+  getMyOrders,
+  getOneUserOrders,
+  getMyRecentOrder,
+  getMyOrderDetails,
+  getUserOrderDetail,
+} = require("../controllers/orders.js");
 
 //get all Orders
-router.get('', getOrders)
+router.get("", getOrders);
 
-//add an Oreder
-router.get('', addOrder)
+//get my Orders
+router.get("/me", getMyOrders);
 
-//get only one Order
-router.get('/:id', getOneOrder)
+//get all Orders
+router.get("/me/recent", getMyRecentOrder);
+//get my order detail
+router.get("/me/:orderId", getMyOrderDetails);
 
-module.exports = router
+//get one users Orders
+router.get("/:uuid", getOneUserOrders);
+
+//get user order detail
+router.get("/:orderId", getUserOrderDetail);
+
+module.exports = router;

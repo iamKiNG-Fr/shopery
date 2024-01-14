@@ -1,50 +1,123 @@
-const {ShoperyOrders} = require('../sequelize/models');
+const {
+  Products,
+  ShoperyOrders,
+  OrderStatus,
+  ShippingAddress,
+  Users,
+  ShoperyOrderDetails,
+} = require("../sequelize/models");
+const orderstatus = require("../sequelize/models/orderstatus");
+const shoperyorders = require("../sequelize/models/shoperyorders");
 
-const getOrders = (req, res) => {
-    return res.status(200).send("orders")
-}
+const getOrders = async (req, res) => {
+  const shoperyOrders = await ShoperyOrders.findAll({
+    include: [
+      { model: Users, attributes: ["email"] },
+      { model: OrderStatus, attributes: ["status"] },
+    ],
+  });
+  if(shoperyOrders.length === 0){
+    return res.status(404).json({message:"No Orders Found"})
+  }
+  return res.status(200).json(shoperyOrders);
+};
 
-const addOrder = async (req, res) => {
-    try{
+const getMyOrders = async (req, res) => {
+  const { uuid } = req.user;
+  const user = await Users.findOne({ where: { uuid } });
+  const myShoperyOrders = await ShoperyOrders.findAll({
+    where: { userId: user.id },
+    attributes: { exclude: ["userId", 'shippingAddressId', 'statusId'] },
+    include: [
+      { model: Users, attributes: ["email"] },
+      { model: OrderStatus, attributes: ["status"] },
+    ],
+  });
+  if(myShoperyOrders.length === 0){
+    return res.status(404).json({message:"You have no Orders"})
+  }
+  return res.status(200).json(myShoperyOrders);
+};
 
-        const {paymentMethod, userId, shippingAddressId, orderTotal, statusId} = req.body;
-        
-        
-        const product = await Products.findOne({where: {productName}})
-        
-        // console.log(product);
-        if(product == null){
-            
-            return res.json({message: `product does not exist`})
-            
-        } else {
-            
-            const productId = product.id           
-            const hotDeal = await HotDeals.findOne({where: {productId}})
-            
-            if (hotDeal != null) {
-                
-                return res.json({message: `${productName} is already a hotDeal`})
-            } else {
-                
-                await HotDeals.create({productId})
-                
-                return res.status(200.).json({message: `new product ${productName} is now a hotDeal`})
+const getMyRecentOrder = async (req, res) => {
+  const { uuid } = req.user;
+  const user = await Users.findOne({ where: { uuid } });
+  const myShoperyOrders = await ShoperyOrders.findAll({
+    where: { userId: user.id },
+    attributes: { exclude: ["userId"] },
+    include: [
+      { model: Users, attributes: ["email"] },
+      { model: OrderStatus, attributes: ["status"] },
+    ],
+  });
+  if(myShoperyOrders.length === 0){
+    return res.status(404).json({message:"You have no Orders"})
+  }
+  const lastOrder = myShoperyOrders[myShoperyOrders.length - 1];
+  return res.status(200).json(lastOrder);
+};
 
-            }
+const getOneUserOrders = async (req, res) => {
+  const { uuid } = req.params;
+  const user = await Users.findOne({ where: { uuid } });
+  const shoperyOrders = await ShoperyOrders.findAll({
+    where: { userId: user.id },
+    include: [
+      { model: Users, attributes: ["email"] },
+      { model: OrderStatus, attributes: ["status"] },
+    ],
+  });
+  if(shoperyOrders.length === 0){
+    return res.status(404).json({message:"This user has no Orders"})
+  }
+  return res.status(200).json(shoperyOrders);
+};
 
-        }
-            
-    
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({message: "something went wrong"})
-    
-    }
-}
+const getMyOrderDetails = async (req, res) => {
+  const { orderId } = req.params;
+  const shoperyOrdersDetails = await ShoperyOrderDetails.findAll({
+    where: { orderId },
+    include: [
+      { model: Products, attributes: ["productName"] },
+      {
+        model: ShoperyOrders,
+        attributes: ["paymentMethod", "orderTotal"],
+        include: [{ model: OrderStatus, attributes: ["status"] }, { model: ShippingAddress, attributes: {exclude: ['id', 'userId', 'createdAt', 'updatedAt']} }],
+      },
+    ],
+    attributes: {exclude: ['id']}
+  });
+  if(shoperyOrdersDetails.length === 0){
+    return res.status(404).json({message:"You have no Orders"})
+  }
+  return res.status(200).json(shoperyOrdersDetails);
+};
 
-const getOneOrder = (req, res) => {
-    return res.status(200).send("orders")
-}
+const getUserOrderDetail = async (req, res) => {
+  const { orderId } = req.params;
+  const shoperyOrdersDetails = await ShoperyOrderDetails.findAll({
+    where: { orderId },
+    include: [
+      { model: Products, attributes: ["productName"] },
+      {
+        model: ShoperyOrders,
+        attributes: ["paymentMethod", "orderTotal"],
+        include: [{ model: OrderStatus, attributes: ["status"] }, { model: ShippingAddress, attributes: {exclude: ['id', 'userId', 'createdAt', 'updatedAt']} }],
+      },
+    ],
+  });
+  if(shoperyOrdersDetails.length === 0){
+    return res.status(404).json({message:"This user has no Orders"})
+  }
+  return res.status(200).json(shoperyOrdersDetails);
+};
 
-module.exports = {getOrders, addOrder, getOneOrder}
+module.exports = {
+  getOrders,
+  getMyOrderDetails,
+  getMyOrders,
+  getOneUserOrders,
+  getMyRecentOrder,
+  getOneUserOrders,
+  getUserOrderDetail,
+};

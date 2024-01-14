@@ -112,11 +112,15 @@ const deleteUser = async (req, res) => {
 
 const addUserAddress = async (req, res) => {
   try {
-    const { houseNumber, streetName, addressLine, city, state } = req.body;
+    const {houseNumber, streetName, addressLine, city, state } = req.body;
 
-    const uuid = req.params.uuid;
+    const {uuid} = req.user;
 
-    const user = await Users.findAll({ where: { uuid } });
+    const user = await Users.findOne({ where: { uuid } });
+
+    if (!user) {
+        return res.status(404).json({message:"User must be logged in"})    
+    }
 
     ShippingAddress.create({
       houseNumber,
@@ -135,14 +139,16 @@ const addUserAddress = async (req, res) => {
   }
 };
 
-const getUsersAddrsses = async (req, res) => {
+const getUsersAddresses = async (req, res) => {
   try {
+
     const addresses = await ShippingAddress.findAll();
 
     if (addresses.length === 0) {
       return res.status(200).json({ message: "no Addresses found" });
     }
-    return res.json({ addresses });
+    return res.json(addresses);
+
   } catch (err) {
     return res.status(500).json({ error: "something went wrong" });
   }
@@ -158,7 +164,7 @@ const getUserAddress = async (req, res) => {
     }
 
     const singleAddress = await ShippingAddress.findOne({
-      where: { userId: user.id },
+      attributes: {exclude: ['userId', 'id']},where: { userId: user.id },
     });
 
     if (singleAddress.length === 0) {
@@ -204,7 +210,7 @@ module.exports = {
   updateUser,
   deleteUser,
   addUserAddress,
-  getUsersAddrsses,
+  getUsersAddresses,
   getUserAddress,
   updateUserAddress,
 };

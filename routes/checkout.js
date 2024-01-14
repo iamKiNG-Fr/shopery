@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const {checkout} = require('../controllers/checkout.js')
+const {checkOut} = require('../controllers/checkout.js')
 
-//get all the ads
-router.get('', checkout)
+//check out cart
+router.post('', checkOut)
 
 //get only one ad
 // router.get('/:id', getOneAd)

@@ -37,9 +37,9 @@ app.use(session({
     saveUninitialized: true,
     store: myStore,
     cookie: {
-        sameSite: 'Strict',
-        maxAge: 180 * 60 * 1000
-        // secure: false
+        sameSite: 'None',
+        maxAge: 180 * 60 * 1000,
+        secure: true
     }
 }))
 app.use(passport.initialize()) // init passport on every route call.

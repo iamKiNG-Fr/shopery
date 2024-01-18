@@ -107,7 +107,7 @@ const addToCart = async (req,res) => {
             
             }
 
-            return res.status(200).json({message: `${quantity} ${product.productName} added to cart`, user: req.isAuthenticated})
+            return res.status(200).json({message: `${quantity} ${product.productName} added to cart`, Cart: req.cart})
             
         } else {
             
@@ -141,7 +141,7 @@ const removeFromCart = async (req, res) => {
                     } 
                     cart[item].qty-=quantity
                     cart[item].subtotal-=cart[item].price*quantity;
-                    return res.status(200).json({message:`${product.productName} Quantity reduced by ${quantity}`})
+                    return res.status(200).json({message:`${product.productName} Quantity reduced by ${quantity}`, Cart: req.cart})
                 } else {
                     return res.status(200).json({message:`${product.productName} not in cart`})        
                 }

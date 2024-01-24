@@ -9,7 +9,7 @@ const app = express()
 const fs = require('fs').promises
 const path = require('path')
 const flash = require('express-flash')
-const { sequelize, Users, Cart, CartItem} = require('./sequelize/models') 
+const { sequelize, Users, Cart, CartItem, Products} = require('./sequelize/models') 
 const PORT = process.env.PORT || 5300
 
 // initalize sequelize with session store
@@ -31,7 +31,13 @@ const loadUserCart = async (req, res, next) => {
         if (cart.length > 0) {
             // get users last cart
             const lastCart = cart.slice(-1)[0]
-            req.session.cart = await CartItem.findAll({where:{cartId: lastCart.id}})
+
+            for(const item of lastCart){
+                const {productId, quantity} = await CartItem.findAll({where:{cartId: item.id}})
+                const {productName, productPrice, productImage} = await Products.findAll({where:{id: productId}})
+                const cartProductDetails = {productId, name: productName, qty: quantity, price: productPrice, image: productImage}
+                req.session.cart += cartProductDetails
+            }
         }
         } catch (error) {
         console.error(error);

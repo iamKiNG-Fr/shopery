@@ -29,6 +29,8 @@ router.post('/login', ensureNotAuthenticated, (req, res, next) => {
             user.cart = req.session.cart;
             user.save(); // Save the user with the updated cart
           }
+
+          console.log(req.user);
         // Now req.user should be set to the authenticated user
         return next()
     });

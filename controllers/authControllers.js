@@ -40,7 +40,7 @@ const login = (req, res)=> {
     // Then you can send your json as response.
     
 
-    res.json({message:"Success", user: req.user, cart: req.user.cart});
+    res.json({message:"Success", user: req.user.email});
 };
 
 const logout = (req, res, next)=>{

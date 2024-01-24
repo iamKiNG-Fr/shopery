@@ -9,7 +9,7 @@ const app = express()
 const fs = require('fs').promises
 const path = require('path')
 const flash = require('express-flash')
-const { sequelize} = require('./sequelize/models') 
+const { sequelize, Users, Cart, CartItem} = require('./sequelize/models') 
 const PORT = process.env.PORT || 5300
 
 // initalize sequelize with session store
@@ -20,6 +20,27 @@ var myStore = new SequelizeStore({
     checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
     expiration: 24 * 60 * 60 * 1000  // The maximum age (in milliseconds) of a valid session.
 });
+
+// Middleware to fetch and store the user's cart in the session
+const loadUserCart = async (req, res, next) => {
+    if (req.isAuthenticated()) {
+      try {
+        // Assuming you have associations set up in your models
+        const cart = await Cart.findAll({where: {userId: req.user.id}, include: 'CartItem' });
+        
+        if (cart.length > 0) {
+            // get users last cart
+            const lastCart = cart.slice(-1)[0]
+            req.session.cart = lastCart
+        }
+        } catch (error) {
+        console.error(error);
+      }
+    }
+    next();
+  };
+  
+
 
 //middleware
 app.set("trust proxy", 1)
@@ -46,7 +67,8 @@ app.use(passport.initialize()) // init passport on every route call.
 app.use(passport.session()) // allow passport to use "express-session".
 app.use(passport.authenticate('session')) //configuring Passport.js to use the session-based authentication strategy for user authentication.
 app.use(flash())
-
+// Use the load user cart middleware
+app.use(loadUserCart);
 
 //make sessions available in views
 app.get('*', (req,res,next)=>{

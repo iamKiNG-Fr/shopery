@@ -21,11 +21,11 @@ initializePassport(passport);
 router.get("", getUsers);
 
 router.get("/profile", (req, res) => {
-    const {uuid, email} = req.user
   if(!req.user){
     return res.status(404).json({message:"no user logged in"})
   }
-  return res.status(200).json({uuid, email});
+  const {uuid, email, cart} = req.user
+  return res.status(200).json({uuid, email, cart});
 });
 
 //get all user addresses

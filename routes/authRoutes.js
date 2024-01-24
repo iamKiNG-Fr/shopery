@@ -27,16 +27,14 @@ router.post('/login', cartStore, ensureNotAuthenticated, (req, res, next) => {
         return res.status(500).json({ error: 'Internal Server Error during login' });
         }
 
-        console.log(req.cartData);
-
         if (req.cartData) {
 
             const cart = req.cartData
 
             const storedCart = await Cart.create({userId: req.user.id})
             
-            for(const item in cart){
-                await CartItem.create({cartId: storedCart.id, productId: item.productId, quantity: item.quantity})
+            for(const item of cart){
+                await CartItem.create({cartId: storedCart.id, productId: item.productId, quantity: item.qty})
             }
            
             console.log("<<<added to req.user.cart>>>");

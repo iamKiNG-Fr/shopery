@@ -29,8 +29,9 @@ router.post('/login', cartStore, ensureNotAuthenticated, (req, res, next) => {
 
         if (req.cartData) {
             console.log("<<<here>>>");
-            user.cart = req.cartData;
+            req.user.cart = req.cartData;
             user.save(); // Save the user with the updated cart
+            console.log("<<<added to req.user.cart>>>");
         }
 
 

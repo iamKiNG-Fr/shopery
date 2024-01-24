@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {login, logout, hi, ensureAuthenticated, ensureNotAuthenticated} = require('../controllers/authControllers')
+const {login, logout, hi, ensureAuthenticated, cartStore, ensureNotAuthenticated} = require('../controllers/authControllers')
 
 const initializePassport = require('../passportConfig')
 const passport = require('passport')
@@ -9,8 +9,8 @@ initializePassport(passport)
 
 //routes
 
-router.post('/login', ensureNotAuthenticated, (req, res, next) => {
-     passport.authenticate('local', (err, user, info)=>{
+router.post('/login', cartStore, ensureNotAuthenticated, (req, res, next) => {
+    passport.authenticate('local', (err, user, info)=>{
     if (err){
         console.error(err);
         return res.status(500).json({message: "server error"})
@@ -27,13 +27,13 @@ router.post('/login', ensureNotAuthenticated, (req, res, next) => {
 
         console.log(req.session);
 
-        if (req.session.cart) {
+        if (req.cartData) {
             console.log("<<<here>>>");
-            user.cart = req.session.cart;
+            user.cart = req.cartData;
             user.save(); // Save the user with the updated cart
         }
 
-        
+
         // Now req.user should be set to the authenticated user
         return next()
     });

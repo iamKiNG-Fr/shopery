@@ -23,6 +23,12 @@ const ensureAuthenticated = (req, res, next) => {
     
     // If the user is already authenticated, allow proceed
 }
+
+const cartStore = (req, res, next) => {
+    req.cartData = req.session.cart
+    next()
+}
+
 const hi = (req, res, next) => {
    console.log('hi');
    return next()
@@ -45,4 +51,4 @@ const logout = (req, res, next)=>{
     })
     res.send("logout successful")
 }
-module.exports = {login, logout, hi, ensureNotAuthenticated, ensureAuthenticated}
+module.exports = {login, logout, hi, cartStore, ensureNotAuthenticated, ensureAuthenticated}

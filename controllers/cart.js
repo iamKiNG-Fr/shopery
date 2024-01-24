@@ -35,9 +35,6 @@ const products = require('../sequelize/models/products');
 // };
 
 const getCart = async (req, res) => {
-    console.log(req.session);
-    console.log("<<mmm>>");
-    console.log(req.user);
     const cart = req.session.cart
     if (!cart) {
         return res.status(200).send("No products in cart")

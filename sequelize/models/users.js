@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.ShoperyOrders, {foreignKey: 'userId'});
       this.hasMany(models.ShippingAddress, {foreignKey: 'userId'});
+      this.hasMany(models.Cart, {foreignKey: 'userId'});
     }
     toJSON(){
       return {...this.get(), id: undefined}

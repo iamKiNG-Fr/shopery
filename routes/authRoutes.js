@@ -24,7 +24,11 @@ router.post('/login', ensureNotAuthenticated, (req, res, next) => {
         if (loginErr) {
         return res.status(500).json({ error: 'Internal Server Error during login' });
         }
-
+        
+        if (req.session.cart) {
+            user.cart = req.session.cart;
+            user.save(); // Save the user with the updated cart
+          }
         // Now req.user should be set to the authenticated user
         return next()
     });

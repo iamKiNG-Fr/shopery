@@ -26,12 +26,12 @@ const loadUserCart = async (req, res, next) => {
     if (req.isAuthenticated()) {
       try {
         // Assuming you have associations set up in your models
-        const cart = await Cart.findAll({where: {userId: req.user.id}, include: 'CartItem' });
+        const cart = await Cart.findAll({where: {userId: req.user.id}});
         
         if (cart.length > 0) {
             // get users last cart
             const lastCart = cart.slice(-1)[0]
-            req.session.cart = lastCart
+            req.session.cart = await CartItem.findAll({where:{cartId: lastCart.id}})
         }
         } catch (error) {
         console.error(error);

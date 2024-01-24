@@ -33,6 +33,7 @@ router.post('/login', ensureNotAuthenticated, (req, res, next) => {
             user.save(); // Save the user with the updated cart
         }
 
+        
         // Now req.user should be set to the authenticated user
         return next()
     });

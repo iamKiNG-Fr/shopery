@@ -1,4 +1,6 @@
 const express = require('express')
+const {Cart, CartItem} = require('../sequelize/models')
+
 const router = express.Router()
 const {login, logout, hi, ensureAuthenticated, cartStore, ensureNotAuthenticated} = require('../controllers/authControllers')
 
@@ -20,7 +22,7 @@ router.post('/login', cartStore, ensureNotAuthenticated, (req, res, next) => {
     }
 
     // Using req.login
-    req.login(user, (loginErr) => {
+    req.login( user, async (loginErr) => {
         if (loginErr) {
         return res.status(500).json({ error: 'Internal Server Error during login' });
         }
@@ -28,13 +30,21 @@ router.post('/login', cartStore, ensureNotAuthenticated, (req, res, next) => {
         console.log(req.session);
 
         if (req.cartData) {
-            console.log("<<<here>>>");
-            req.user.cart = req.cartData;
-            user.save(); // Save the user with the updated cart
+
+            const cart = req.cartData
+            const {productId, qty}= req.cartData;
+
+            const storedCart = await Cart.create({userId: req.user.id})
+            
+            for(const item in cart){
+                await CartItem.create({cartId: storedCart.id, productId: item.productId, quantity: item.quantity})
+            }
+           
             console.log("<<<added to req.user.cart>>>");
         }
-
-
+        //remove cartdata from req
+        delete req.cartData
+        
         // Now req.user should be set to the authenticated user
         return next()
     });
